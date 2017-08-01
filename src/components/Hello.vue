@@ -20,7 +20,7 @@ export default {
   },
   data () {
     return {
-      msg: '测试上传'
+      msg: 'bview'
     }
   },
   methods:{
