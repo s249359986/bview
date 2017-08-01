@@ -1,9 +1,9 @@
 {
-  "name": "my-project",
+  "name": "bview",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "bview,vue",
   "author": "宋冬红 <249359986@qq.com>",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
