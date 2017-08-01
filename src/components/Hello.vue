@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
 <upload @handleSuccess='handleSuccess' action='/vip/m/suyunorder/cancelOrder' multiple>
 <!-- <div @click.stop='handleClickDiv'  ref="child">点击上传</div> -->
-<button>ssss</button>
+<button>上传</button>
 </upload>
 
   </div>
