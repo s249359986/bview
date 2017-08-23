@@ -1,20 +1,10 @@
 <template>
   <div :class="[prefixCls]">
-    <div
-        @click="handleClick"
-      >
+    <div @click="handleClick">
       <slot></slot>
-        <input @click.stop
-            ref="input"
-            type="file"
-            :class="[prefixCls + '-input']"
-            @change="handleChange"
-            :multiple="multiple"
-            :accept="accept"
-            :action="action">
-
+        <input @click.stop @focus='handleFocus' @blur='handleBlur' @input='handleInput' ref='input' type='file' :class="[prefixCls + '-input']" @change='handleChange' :multiple='multiple' :accept='accept' :action='action' :compress='true' >
     </div>
-<!-- <div>{{msg}}</div> -->
+
   </div>
 </template>
 
@@ -50,6 +40,10 @@ export default {
         withCredentials: {
             type: Boolean,
             default: false
+        },
+        compress: {
+            type: Boolean,
+            default: true
         },
         // showUploadList: {
         //     type: Boolean,
@@ -127,6 +121,7 @@ export default {
   data () {
     return {
       fileList: [],
+testImg:'',
       prefixCls: prefixCls
 
     }
@@ -135,7 +130,7 @@ export default {
 },
   methods: {
     triggerClick(){
-      this.$refs.input.click();    
+      this.$refs.input.click();
     },
     handleClick () {
       this.triggerClick();
@@ -146,6 +141,15 @@ export default {
       if (postFiles.length === 0) return;
       postFiles.forEach(file => {
           this.requestUpload(file);
+      });
+    },
+    handleCompress(files){
+      debugger;
+      let postFiles = Array.prototype.slice.call(files);
+      if (!this.multiple) postFiles = postFiles.slice(0, 1);
+      if (postFiles.length === 0) return;
+      postFiles.forEach(file => {
+          this.readFile(file,);
       });
     },
     requestUpload(file){
@@ -168,22 +172,43 @@ export default {
                     }
                 });
     },
+    handleBlur(){
+      console.log("handleBlur");
+    },
+    handleFocus(){
+      console.log("handleFocus");
+    },
+    handleInput(){
+      console.log("handleInput");
+    },
   handleChange(e,a) {
-
+    console.log("handleChange");
     var _this=this;
     var files=e.target.files;
+    if(this.compress)
+    {
+    this.handleCompress(files,function(){});
+    }
     this.uploadFiles(files);
     this.$refs.input.value = null;
-    return;
-
-      if(files.length===0)
-      {return;}
-      var oFReader = new FileReader()
-      oFReader.onload = function (oFREvent) {
-        _this.preImg=oFREvent.target.result;
-      }
-      var oFile =files[0];
-      oFReader.readAsDataURL(oFile);
+  },
+  readFile(files){
+    var _this=this;
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var oFReader = new FileReader()
+    let tempImg=new Image();
+    let imageType=files.type;
+    tempImg.onload=function(){
+      canvas.width=tempImg.width
+      canvas.height=tempImg.height
+      context.drawImage(tempImg,0,0,canvas.width,canvas.height);
+      _this.testImg=canvas.toDataURL(imageType,0.9)
+    }
+    oFReader.onload = function (oFREvent) {
+      tempImg.src=oFREvent.target.result;
+    }
+    oFReader.readAsDataURL(files);
   },
   handleProgress (e, file) {
       // const _file = this.getFile(file);
@@ -202,6 +227,7 @@ export default {
       //         _file.showProgress = false;
       //     }, 1000);
       // }
+      this.$emit('onSuccess',file);
       console.log('handleSuccess');
   },
   getFile (file) {

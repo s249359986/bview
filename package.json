@@ -1,14 +1,27 @@
 {
   "name": "bview",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "bview,vue",
-  "author": "宋冬红 <249359986@qq.com>",
+  "author": "7ke",
   "private": false,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js"
   },
+  "main": "dist/iview.js",
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/s249359986/bview.git"
+},
+"bugs": {
+  "url": "https://github.com/s249359986/bview/issues"
+},
+"keywords": [
+  "vue",
+  "ui",
+  "middleware"
+],
   "dependencies": {
     "vue": "^2.3.3",
     "vue-router": "^2.3.1"

@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-<upload @handleSuccess='handleSuccess' action='/vip/m/suyunorder/cancelOrder' multiple>
+<upload @onSuccess='handleSuccess' action='/vip/m/suyunorder/cancelOrder' multiple>
 <button>上传</button>
 </upload>
 
@@ -24,7 +24,8 @@ export default {
   },
   methods:{
     handleSuccess(a,b,c){
-      console.log('handleSuccess');
+      debugger;
+      console.log('test:handleSuccess');
     }
   }
 
