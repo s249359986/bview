@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <router-link to="/upload">上传</router-link>
+    <router-link to="/autoloading">下拉刷新</router-link>
 
   </div>
 </template>
